@@ -15,37 +15,15 @@ except FileNotFoundError:
 def menu():
     while True : 
         user =  input("Enter a choice (Add,View,delete,clear,exit)🤔 : ").lower()
-        # if(user=='add'):
-        #     add=input("Enter task to add in list : ")
-        #     user_input = input("Enter date & time (YYYY-MM-DD HH:MM:SS): ")
-        #     task.append(add+"  "+"|"+"  "+user_input+"  "+"|"+"  "+"Pending")
-        #     with open("myfile.txt" , "w",encoding='utf-8') as file :
-        #         for t in task:
-        #             file.write(t + "\n")
-        #     print(f"{add}  Task added successfully...!!👏 ")
-        #     print("***********************************************************")
-        if user == "add":
-            add = input("Enter task to add in list : ")
+        if(user=='add'):
+            add=input("Enter task to add in list : ")
             user_input = input("Enter date & time (YYYY-MM-DD HH:MM:SS): ")
-
-            try:
-                task_time = datetime.strptime(user_input, "%Y-%m-%d %H:%M:%S")
-            except ValueError:
-                print("❌ Invalid date format")
-                continue
-
-            if task_time < datetime.now() + timedelta(seconds=5):
-                print("❌ Time must be in the future")
-                continue
-
-            task.append(f"{add} | {user_input} | Pending")
-
-            with open("myfile.txt", "w", encoding="utf-8") as file:
+            task.append(add+"  "+"|"+"  "+user_input+"  "+"|"+"  "+"Pending")
+            with open("myfile.txt" , "w",encoding='utf-8') as file :
                 for t in task:
                     file.write(t + "\n")
-
-            schedule_reminder(add, task_time)
-            print(f"{add} task added successfully 👏")
+            print(f"{add}  Task added successfully...!!👏 ")
+            print("***********************************************************")
 
         elif(user=='view'):
             if(len(task)==0):
@@ -91,68 +69,41 @@ def menu():
             print("Goodbye..👋!! Have a nice day....😊")         
             break
 
-# def reminder():
-#     pythoncom.CoInitialize() 
-#     speaker  =  win32com.client.Dispatch("SAPI.SpVoice")
-#     while True:
-#         try:
-#             with open ('myfile.txt','r',encoding='utf-8') as file:
-#                 lines = file.readlines()
-#         except FileNotFoundError:
-#             time.sleep(10)
-#             continue
-#         updated_lines=[]
-#         for line in lines:
-#             parts= line.strip().split("|")
-#             if(len(parts)!=3):
-#                updated_lines.append(line)
-#                continue
-#             task_name,dt_str,status=[p.strip() for p in parts]
-#             try:
-#                 task_time = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
-#             except ValueError:
-#                 task_time = datetime.strptime(dt_str, "%Y-%m-%d %H:%M")
-#             now = datetime.now()
-#             if now >= task_time and status == "Pending":
-#                 speaker.Speak(f"It's time to {task_name}")
-#                 updated_lines.append(f"{task_name} | {dt_str} | Notified\n")
-#             else:
-#                 updated_lines.append(line)
-
-#         with open("myfile.txt", "w", encoding="utf-8") as file:
-#             file.writelines(updated_lines)
-
-#         time.sleep(5)
-
-# t1 = threading.Thread(target=reminder, daemon=True)
-# t1.start()
-def schedule_reminder(task_name, task_time):
-    def remind():
-        pythoncom.CoInitialize()
-        speaker = win32com.client.Dispatch("SAPI.SpVoice")
-
-        wait_seconds = (task_time - datetime.now()).total_seconds()
-        if wait_seconds <= 0:
-            return  # never remind past tasks
-
-        time.sleep(wait_seconds)
-        speaker.Speak(f"It's time to {task_name}")
-
-        # update file after notification
-        with open("myfile.txt", "r", encoding="utf-8") as f:
-            lines = f.readlines()
-
-        updated = []
+def reminder():
+    pythoncom.CoInitialize() 
+    speaker  =  win32com.client.Dispatch("SAPI.SpVoice")
+    while True:
+        try:
+            with open ('myfile.txt','r',encoding='utf-8') as file:
+                lines = file.readlines()
+        except FileNotFoundError:
+            time.sleep(10)
+            continue
+        updated_lines=[]
         for line in lines:
-            if line.startswith(task_name) and "Pending" in line:
-                updated.append(line.replace("Pending", "Notified"))
+            parts= line.strip().split("|")
+            if(len(parts)!=3):
+               updated_lines.append(line)
+               continue
+            task_name,dt_str,status=[p.strip() for p in parts]
+            try:
+                task_time = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
+            except ValueError:
+                task_time = datetime.strptime(dt_str, "%Y-%m-%d %H:%M")
+            now = datetime.now()
+            if now >= task_time and status == "Pending":
+                speaker.Speak(f"It's time to {task_name}")
+                updated_lines.append(f"{task_name} | {dt_str} | Notified\n")
             else:
-                updated.append(line)
+                updated_lines.append(line)
 
-        with open("myfile.txt", "w", encoding="utf-8") as f:
-            f.writelines(updated)
+        with open("myfile.txt", "w", encoding="utf-8") as file:
+            file.writelines(updated_lines)
 
-    threading.Thread(target=remind, daemon=True).start()
+        time.sleep(5)
+
+t1 = threading.Thread(target=reminder, daemon=True)
+t1.start()
 
 menu()
 
