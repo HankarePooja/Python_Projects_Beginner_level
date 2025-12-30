@@ -1,0 +1,20 @@
+EASY
+which is fastest language?|C lang|C++ lang|Java|JS|1|1000/-
+which is best language?|C lang|C++ lang|Java|JS|2|2000/-
+which is interpreted language?|C lang|C++ lang|Python|JS|3|3000/-
+MEDIUM
+which is obj oriented language?|C lang|C++ lang|Java|JS|3|5000/-
+which is used in web dev?|C lang|C++ lang|Java|JS|4|7000/-
+which is mother language?|C lang|C++ lang|Java|JS|1|9000/-
+which is short form of Javascript language?|C lang|C++ lang|Java|JS|4|11000/-
+which is not a language?|C lang|C++ lang|Java|French|4|13000/-
+HARD
+which is used most in ML?|C lang|C++ lang|Python|JS|3|20000/-
+which is beginner friendly language?|C lang|C++ lang|Java|Python|4|30000/-
+which language is used in game dev?|C lang|C++ lang|Java|JS|2|40000/-
+which language is best for DSA?|C lang|C++ lang|Java|JS|2|50000/-
+which language is used in FB?|C lang|C++ lang|Java|JS|4|100000/-
+which language is used in Netflix?|C lang|C++ lang|Java|JS|3|500000/-
+which language is used in Amazon?|C lang|C++ lang|Java|JS|2|1000000/-
+Which keyword is used to create a class in Python?|def|class|function|object|2|1500000/-
+Python is?|Compiled|Interpreted|Both|None|2|2000000/-
